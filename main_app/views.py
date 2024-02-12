@@ -9,6 +9,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import time
 import threading
+from django.shortcuts import get_object_or_404
 
 
 # user registration
@@ -72,6 +73,16 @@ class BumpEventView(generics.ListCreateAPIView):
 class MatchHistoryView(generics.ListCreateAPIView):
     queryset = MatchHistory.objects.all()
     serializer_class = MatchHistorySerializer
+    
+    
+class MatchHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
+  serializer_class = MatchHistorySerializer
+  lookup_field = 'resultId'
+  
+  def get_object(self):
+        resultId = self.kwargs.get('resultId')
+        return get_object_or_404(MatchHistory, id=resultId)
+
 
     
 @receiver(post_save, sender=BumpEvent)
