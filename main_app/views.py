@@ -77,5 +77,7 @@ class MatchHistoryView(generics.ListCreateAPIView):
 def print_bump_event(sender, instance, created, **kwargs):
     if created:  # Check if a new instance was created
         print(f'New BumpEvent Created: {instance}')
+        bump_events = BumpEvent.objects.all().order_by('-phone_time_stamp')[0:2]
+        print(bump_events)
     
     
