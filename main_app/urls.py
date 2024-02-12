@@ -6,5 +6,5 @@ urlpatterns = [
     path('users/register/', CreateUserView.as_view(), name='register'),
     path('users/token/refresh/', VerifyUserView.as_view(), name='token_refresh'),
     path('game/bump', BumpEventView.as_view(), name='bump-event'),
-    path('game/result/ ', MatchHistoryView.as_view(), name='match')
+    path('game/result', MatchHistoryView.as_view(), name='match')
 ]

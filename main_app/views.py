@@ -1,12 +1,16 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User, BumpEvent, Match
+from .models import User, BumpEvent, MatchHistory
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .serializers import UserSerializer, BumpEventSerializer, MatchHistorySerializer
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import time
+import threading
 
-# Create your views here.
+
 # user registration
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -53,6 +57,25 @@ class BumpEventView(generics.ListCreateAPIView):
     queryset = BumpEvent.objects.all()
     serializer_class = BumpEventSerializer
     
+    
+    def deleteSoon():
+        print("This message is displayed after a delay.")
+
+    print("Delay starts.")
+    timer = threading.Timer(5, deleteSoon)  # Delay for 5 seconds
+    timer.start()
+
+    print("This prints immediately, without waiting for the delay.")
+      
+      
+    
 class MatchHistoryView(generics.ListCreateAPIView):
-    queryset = Match.objects.all()
+    queryset = MatchHistory.objects.all()
     serializer_class = MatchHistorySerializer
+    
+@receiver(post_save, sender=BumpEvent)
+def print_bump_event(sender, instance, created, **kwargs):
+    if created:  # Check if a new instance was created
+        print(f'New BumpEvent Created: {instance}')
+    
+    
