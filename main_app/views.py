@@ -72,6 +72,7 @@ class BumpEventView(generics.ListCreateAPIView):
 class MatchHistoryView(generics.ListCreateAPIView):
     queryset = MatchHistory.objects.all()
     serializer_class = MatchHistorySerializer
+
     
 @receiver(post_save, sender=BumpEvent)
 def print_bump_event(sender, instance, created, **kwargs):
@@ -79,5 +80,21 @@ def print_bump_event(sender, instance, created, **kwargs):
         print(f'New BumpEvent Created: {instance}')
         bump_events = BumpEvent.objects.all().order_by('-phone_time_stamp')[0:2]
         print(bump_events)
-    
-    
+        
+        if len(bump_events) < 2:
+          return
+        
+        match = MatchHistory(
+          player_one=bump_events[0].user,
+          player_two=bump_events[1].user,
+          userchoice_1=bump_events[0].choice,
+          userchoice_2=bump_events[1].choice
+        )
+
+        match.save()  # Save the match instance to the database
+        
+        BumpEvent.objects.all().delete()
+        
+        
+        # Use this logic to validate bump request
+        # 1 second refresh, need tot ensure both users to recieve a signal if a match is created or if the request failed

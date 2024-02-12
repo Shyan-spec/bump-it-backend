@@ -6,9 +6,9 @@ from datetime import date
 from django.contrib.auth.models import User
 
 RPS_CHOICES = (
-    ('R', 'Rock'),
-    ('P', 'Paper'),
-    ('S', 'Scissors')
+    ('Rock', 'Rock'),
+    ('Paper', 'Paper'),
+    ('Scissors', 'Scissors')
 )
 
 
