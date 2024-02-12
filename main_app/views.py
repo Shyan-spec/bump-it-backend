@@ -1,10 +1,10 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User
+from .models import User, BumpEvent, Match
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer
+from .serializers import UserSerializer, BumpEventSerializer, MatchHistorySerializer
 
 # Create your views here.
 # user registration
@@ -49,3 +49,10 @@ class VerifyUserView(APIView):
       'user': UserSerializer(user).data
     })
     
+class BumpEventView(generics.ListCreateAPIView):
+    queryset = BumpEvent.objects.all()
+    serializer_class = BumpEventSerializer
+    
+class MatchHistoryView(generics.ListCreateAPIView):
+    queryset = Match.objects.all()
+    serializer_class = MatchHistorySerializer

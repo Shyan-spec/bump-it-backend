@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, BumpEvent, MatchHistory
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,3 +24,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+        
+class BumpEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BumpEvent
+        fields = '__all__' 
+        
+class MatchHistorySerializer(serializers.ModelSerializer):
+     class Meta:
+        model = MatchHistory
+        fields = '__all__' 
