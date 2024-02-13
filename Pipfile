@@ -9,6 +9,11 @@ psycopg2-binary = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
 djangorestframework = "*"
+django-environ = "*"
+dj-database-url = "*"
+django-heroku = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 

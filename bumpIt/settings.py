@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ  
+import dj_database_url
+import django_heroku
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +30,14 @@ SECRET_KEY = 'django-insecure-okf&_a*-sln*a&zfq0zxnx1jr5dei^1zr3p)rlygn#4et8q%=q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+DATABASE_URL=env('DATABASE_URL')
+SECRET_KEY=env('SECRET_KEY')
 
 # Application definition
 
@@ -50,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'bumpIt.urls'
@@ -77,13 +90,15 @@ WSGI_APPLICATION = 'bumpIt.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bump_it_db',
-        'USER': 'main_admin',
-        'PASSWORD': 'password',
-        'HOST': 'localhost'
-    }
+    'default': 
+        dj_database_url.config('DATABASE_URL')
+    #  'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'bump_it_db',
+    #     'USER': 'main_admin',
+    #     'PASSWORD': 'password',
+    #     'HOST': 'localhost'
+    # }
 }
 
 
@@ -127,3 +142,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
