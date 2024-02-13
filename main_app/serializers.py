@@ -34,3 +34,16 @@ class MatchHistorySerializer(serializers.ModelSerializer):
      class Meta:
         model = MatchHistory
         fields = '__all__' 
+
+
+class ProfileViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
+    
+class ProfileDetailsViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'

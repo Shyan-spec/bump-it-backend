@@ -1,10 +1,10 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User, BumpEvent, MatchHistory
+from .models import User, BumpEvent, MatchHistory, Profile
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer, BumpEventSerializer, MatchHistorySerializer
+from .serializers import UserSerializer, BumpEventSerializer, MatchHistorySerializer, ProfileViewSerializer,ProfileDetailsViewSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import time
@@ -82,8 +82,21 @@ class MatchHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
   def get_object(self):
         resultId = self.kwargs.get('resultId')
         return get_object_or_404(MatchHistory, id=resultId)
+      
 
+class ProfileView(generics.ListCreateAPIView):
+      queryset = Profile.objects.all()
+      serializer_class = ProfileViewSerializer
+  
 
+class ProfileDetailsView(generics.RetrieveUpdateDestroyAPIView):
+  
+      serializer_class = ProfileDetailsViewSerializer
+      lookup_field = 'userId'
+      
+      def get_object(self):
+        userId = self.kwargs.get('userId')
+        return get_object_or_404(Profile, id=userId) 
     
 @receiver(post_save, sender=BumpEvent)
 def print_bump_event(sender, instance, created, **kwargs):
@@ -108,4 +121,4 @@ def print_bump_event(sender, instance, created, **kwargs):
         
         
         # Use this logic to validate bump request
-        # 1 second refresh, need tot ensure both users to recieve a signal if a match is created or if the request failed
+        # 1 second refresh, need to ensure both users to recieve a signal if a match is created or if the request failed
