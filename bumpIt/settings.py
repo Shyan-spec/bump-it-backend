@@ -32,6 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
+CORS_ALLOW_ALL_ORIGINS = True 
+
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
