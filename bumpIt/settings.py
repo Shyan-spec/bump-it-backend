@@ -30,7 +30,12 @@ SECRET_KEY = 'django-insecure-okf&_a*-sln*a&zfq0zxnx1jr5dei^1zr3p)rlygn#4et8q%=q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost:5173']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Adjust the port if your frontend runs on a different one
+]
 
 CORS_ALLOW_ALL_ORIGINS = True 
 
