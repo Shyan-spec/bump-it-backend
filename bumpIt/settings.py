@@ -40,11 +40,11 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True 
 
 # Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
-DATABASE_URL=env('DATABASE_URL')
-SECRET_KEY=env('SECRET_KEY')
+# DATABASE_URL=env('DATABASE_URL')
+# SECRET_KEY=env('SECRET_KEY')
 
 # Application definition
 
@@ -59,6 +59,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'main_app',
 ]
+
+# Configuration for simple JWT
+from datetime import timedelta
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,20 +97,44 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bumpIt.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': 
-        dj_database_url.config('DATABASE_URL')
-    #  'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'bump_it_db',
-    #     'USER': 'main_admin',
-    #     'PASSWORD': 'password',
-    #     'HOST': 'localhost'
-    # }
+    # 'default': 
+    #     dj_database_url.config('DATABASE_URL')
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bump_it_db',
+        'USER': 'main_admin',
+        'PASSWORD': 'password',
+        'HOST': 'localhost'
+    }
 }
 
 
