@@ -57,6 +57,12 @@ class VerifyUserView(APIView):
 class BumpEventView(generics.ListCreateAPIView):
     queryset = BumpEvent.objects.all()
     serializer_class = BumpEventSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+      # This associates the newly created cat with the logged-in user
+      serializer.save(user=self.request.user)
+    
     
     
     def deleteSoon():
@@ -85,8 +91,13 @@ class MatchHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
       
 
 class ProfileView(generics.ListCreateAPIView):
-      queryset = Profile.objects.all()
       serializer_class = ProfileViewSerializer
+      permission_classes = [permissions.IsAuthenticated]
+      
+      def get_queryset(self):
+       user = self.request.user
+       return Profile.objects.filter(user=user)
+      
   
 
 class ProfileDetailsView(generics.RetrieveUpdateDestroyAPIView):
