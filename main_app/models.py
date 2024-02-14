@@ -22,7 +22,7 @@ class Profile(models.Model):
     
 class BumpEvent(models.Model):
     phone_time_stamp= models.DateTimeField()
-    server_time_stamp= models.DateTimeField()
+    server_time_stamp= models.DateTimeField(auto_now_add=True)
     choice= models.CharField(max_length=100, choices=RPS_CHOICES)
     user= models.ForeignKey(User, on_delete=models.CASCADE)
     

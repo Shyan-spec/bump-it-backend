@@ -29,6 +29,9 @@ class BumpEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = BumpEvent
         fields = '__all__' 
+    
+    server_time_stamp = serializers.DateTimeField(required=False)
+    user = serializers.PrimaryKeyRelatedField(read_only=True) 
         
 class MatchHistorySerializer(serializers.ModelSerializer):
      class Meta:
