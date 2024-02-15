@@ -15,7 +15,7 @@ RPS_CHOICES = (
 class Profile(models.Model):
     name = models.CharField(max_length=50, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = models.CharField(max_length=250, default='')
+    profile_image = models.CharField(max_length=250, default='../../img/portrait-0.png')
     
     def save(self, *args, **kwargs):
         # Set the name field to match the user's username
