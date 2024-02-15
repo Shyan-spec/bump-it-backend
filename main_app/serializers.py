@@ -49,4 +49,9 @@ class ProfileDetailsViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-        extra_kwargs = {'user': {'required': False}}
+        extra_kwargs = {'user': {'required': False, 'allow_null': True}}
+
+    def update(self, instance, validated_data):
+        # Handle the update logic, ensuring user is not overwritten unintentionally
+        validated_data.pop('user', None)  # Remove user from validated_data if it's there
+        return super().update(instance, validated_data)
