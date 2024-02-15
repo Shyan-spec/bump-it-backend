@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    profile_name = serializers.CharField(source='profile.name')
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'profile_name']
+        fields = ['id', 'username', 'email', 'password']
         
     def create(self, validated_data):
         profile_data = validated_data.pop('profile', {})
