@@ -40,11 +40,11 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True 
 
 # Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
-DATABASE_URL=env('DATABASE_URL')
-SECRET_KEY=env('SECRET_KEY')
+# DATABASE_URL=env('DATABASE_URL')
+# SECRET_KEY=env('SECRET_KEY')
 
 # Application definition
 
@@ -126,15 +126,15 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': 
-        dj_database_url.config('DATABASE_URL')
-    #  'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'bump_it_db',
-    #     'USER': 'main_admin',
-    #     'PASSWORD': 'password',
-    #     'HOST': 'localhost'
-    # }
+    # 'default': 
+    #     dj_database_url.config('DATABASE_URL')
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bump_it_db',
+        'USER': 'main_admin',
+        'PASSWORD': 'password',
+        'HOST': 'localhost'
+    }
 }
 
 
