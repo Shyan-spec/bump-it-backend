@@ -41,7 +41,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Initialise environment variables
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env()  
 
 DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
