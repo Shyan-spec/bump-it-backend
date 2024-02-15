@@ -17,6 +17,11 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.CharField(max_length=250, default='')
     
+    def save(self, *args, **kwargs):
+        # Set the name field to match the user's username
+        self.name = self.user.username
+        super(Profile, self).save(*args, **kwargs)
+    
     def __str__(self):
         return f"{self.name}"
     
