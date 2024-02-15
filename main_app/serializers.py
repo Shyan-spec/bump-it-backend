@@ -49,3 +49,4 @@ class ProfileDetailsViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+        extra_kwargs = {'user': {'required': False}}
